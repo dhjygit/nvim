@@ -141,10 +141,24 @@ nnoremap <space>e :e
 nnoremap <space>/ :!
 nnoremap <space>rr :r !
 nnoremap sg :r !figlet 
-nnoremap s; <end>a;<esc>
+nnoremap s; <end>a:<esc>
+nnoremap r; <end>a;<esc>
 nnoremap <space>rc :e ~/.config/nvim/init.vim<CR>
 "nnoremap <space>rd :!rm ~/.local/share/nvim/swap/*<CR><CR>
 nnoremap <space>rd :!rm ~/.config/nvim/tmp/backup/%.swp<cr><cr>
+
+" -- visual mode -- "
+vnoremap a' c'<esc>pa'<esc>
+vnoremap a" c"<esc>pa"<esc>
+vnoremap a< c<<esc>pa><esc>
+vnoremap a> c<<esc>pa><esc>
+vnoremap a{ c{<esc>pa}<esc>
+vnoremap a} c{<esc>pa}<esc>
+vnoremap a[ c[<esc>pa]<esc>
+vnoremap a] c[<esc>pa]<esc>
+vnoremap a( c(<esc>pa)<esc>
+vnoremap a) c(<esc>pa)<esc>
+vnoremap ab c(<esc>pa)<esc>
 
 " -- insert mode -- "
 inoremap <c-h> <left>
@@ -225,6 +239,7 @@ Plug '986299679/space-vim-theme'
 
 " -- status line -- "
 Plug 'liuchengxu/eleline.vim'
+Plug 'bling/vim-bufferline'
 "Plug 'vim-airline/vim-airline'
 "Plug 'vim-airline/vim-airline-themes'
 
@@ -255,7 +270,7 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'szw/vim-maximizer'
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
-Plug 'kien/ctrlp.vim'
+Plug 'liuchengxu/vim-clap'
 Plug 'tpope/vim-capslock'
 Plug 'junegunn/vim-after-object'
 Plug 'jwarby/antovim'
@@ -264,15 +279,105 @@ Plug 'tpope/vim-abolish'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'Valloric/MatchTagAlways'
 Plug 'yggdroot/indentline'
+Plug 'kshenoy/vim-signature'
+Plug 'liuchengxu/vista.vim'
+Plug 'drmingdrmer/xptemplate'
+"Plug 'SirVer/ultisnips'
+"Plug 'honza/vim-snippets'
 
 call plug#end()
 
 " ------------------------- "
 " --- config of plugins --- "
 " ------------------------- "
+" -- ultisnips -- "
+"function! g:UltiSnips_Complete()
+"  call UltiSnips#ExpandSnippet()
+"  if g:ulti_expand_res == 0
+"    if pumvisible()
+"      return "\<C-n>"
+"    else
+"      call UltiSnips#JumpForwards()
+"      if g:ulti_jump_forwards_res == 0
+"        return "\<TAB>"
+"      endif
+"    endif
+"  endif
+"  return ""
+"endfunction
+"
+"function! g:UltiSnips_Reverse()
+"  call UltiSnips#JumpBackwards()
+"  if g:ulti_jump_backwards_res == 0
+"    return "\<C-P>"
+"  endif
+"
+"  return ""
+"endfunction
+"
+"
+"if !exists("g:UltiSnipsJumpForwardTrigger")
+"  let g:UltiSnipsJumpForwardTrigger = "<tab>"
+"endif
+"if !exists("g:UltiSnipsJumpBackwardTrigger")
+"  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+"endif
+
+" -- vista.vim -- "
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+set statusline+=%{NearestMethodOrFunction()}
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+
+" -- xptemplate -- "
+nnoremap <c-p> :Clap<cr>
+
+" -- xptemplate -- "
+let g:xptemplate_key = '<c-i>'
+let g:xptemplate_key_visual = '<c-i>'
+let g:xptemplate_key_pum_only = '<s-Tab>'
+let g:xptemplate_goback = '<c-i>'
+let g:xptemplate_nav_next = '<tab>'
+let g:xptemplate_nav_prev = '<s-tab>'
+
+" -- vista -- "
+nmap <leader><leader>t :Vista!!<cr>
+
+" -- vim-signature -- "
+"autocmd VimEnter * SignatureToggle
+let g:SignatureEnabledAtStartup = 0
+nnoremap <leader><leader>s :SignatureToggle<cr>
+let g:SignatureMap = {
+  \ 'Leader'             :  "m",
+  \ 'PlaceNextMark'      :  "m,",
+  \ 'ToggleMarkAtLine'   :  "m.",
+  \ 'PurgeMarksAtLine'   :  "m-",
+  \ 'DeleteMark'         :  "dm",
+  \ 'PurgeMarks'         :  "m<Space>",
+  \ 'PurgeMarkers'       :  "m<BS>",
+  \ 'GotoNextLineAlpha'  :  "']",
+  \ 'GotoPrevLineAlpha'  :  "'[",
+  \ 'GotoNextSpotAlpha'  :  "`]",
+  \ 'GotoPrevSpotAlpha'  :  "`[",
+  \ 'GotoNextLineByPos'  :  "]'",
+  \ 'GotoPrevLineByPos'  :  "['",
+  \ 'GotoNextSpotByPos'  :  "]`",
+  \ 'GotoPrevSpotByPos'  :  "[`",
+  \ 'GotoNextMarker'     :  "]-",
+  \ 'GotoPrevMarker'     :  "[-",
+  \ 'GotoNextMarkerAny'  :  "]=",
+  \ 'GotoPrevMarkerAny'  :  "[=",
+  \ 'ListBufferMarks'    :  "m/",
+  \ 'ListBufferMarkers'  :  "m?"
+  \ }
+
+" -- jedi-vim -- "
+let g:jedi#documentation_command = "<leader><leader>h"
 
 " -- indentline -- "
-autocmd VimEnter * IndentLinesToggle
+"autocmd VimEnter * IndentLinesToggle
+let g:indentLine_enabled = 0
 nnoremap <leader><leader>i :IndentLinesToggle<cr>
 let g:indentLine_color_gui = '#A4E57E'
 let g:indentLine_char_list = ['┆']
@@ -287,14 +392,15 @@ nmap sp <Plug>(ale_previous_wrap)
 nmap sn <Plug>(ale_next_wrap)
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
-au FileType * ALEToggle
+"au FileType * ALEToggle
+let g:ale_enabled = 0
 "nmap <Leader>d :ALEDetail<CR>
 let g:ale_linters = {
-\   'python': ['flake8'],
+\   'python': ['flake8', 'yapf'],
 \   'javascript': ['jshint'],
 \}
 "let g:ale_linters = {
-"\  'python': ['flake8', 'pylint']
+"\  'python': ['flake8', 'pylint', 'yapf']
 "\   'javascript': ['jshint'],
 "\   'css': ['stylelint'],
 "\   'c++': ['clang'],
@@ -322,6 +428,7 @@ nmap sa <c-n>:MtaJumpToOtherTag<cr>2<right><c-n>
 nnoremap se :Antovim<cr>
 let g:custom_antovim_definitions = [
 \ ['TRUE', 'FALSE'],
+\ ['True', 'False'],
 \ ['yes', 'no'],
 \ ['YES', 'NO']
 \ ]
@@ -342,10 +449,6 @@ map tt :NERDTreeToggle<cr>
 map <c-o> <Plug>CapsLockToggle
 imap <c-o> <Plug>CapsLockToggle
 
-" -- ctrlp -- "
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-
 " -- vim-closetag -- "
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
 let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
@@ -361,6 +464,7 @@ let g:closetag_close_shortcut = '<leader>>'
 
 " -- MatchTagAlways -- "
 autocmd VimEnter * source $MYVIMRC
+nnoremap <leader><leader>m :e %<cr>
 nnoremap <space><space> :MtaJumpToOtherTag<cr>
 let g:mta_use_matchparen_group = 0
 let g:mta_set_default_matchtag_color = 1
@@ -408,7 +512,7 @@ hi Comment guifg=#5C637f ctermfg=248
 "hi NonText ctermfg=gray guifg=grey10
 
 " -- vim-trailing-whitespace -- "
-map <leader><space> :FixWhitespace<cr>
+map <leader><leader><space> :FixWhitespace<cr>
 
 " -- vim-maximizer -- "
 nnoremap <silent><c-y> :MaximizerToggle<CR>
@@ -495,7 +599,8 @@ func! FormatCode()
 	elseif &filetype == 'cpp'
 	elseif &filetype == 'java'
 	elseif &filetype == 'sh'
-	elseif &filetype == 'python'
+	elseif &filetype == 'python' || &filetype == 'json'
+		exec "Autoformat"
 		exec "Autoformat"
 	elseif &filetype == 'html' || &filetype == 'css' || &filetype == 'javascript'
 		exec "% j"
@@ -505,6 +610,7 @@ func! FormatCode()
 	elseif &filetype == 'dart'
 	elseif &filetype == 'go'
 	endif
+	exec "w"
 endfunc
 
 " -- check the code -- "
@@ -515,7 +621,7 @@ func! CheckCode()
 	elseif &filetype == 'cpp'
 	elseif &filetype == 'java'
 	elseif &filetype == 'sh'
-	elseif &filetype == 'python'
+	elseif &filetype == 'python' || &filetype == 'json'
 		exec "ALEToggle"
 	elseif &filetype == 'html' || &filetype == 'css' || &filetype == 'javascript'
 		exec "ALEToggle"
