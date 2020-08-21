@@ -290,6 +290,8 @@ call plug#end()
 " ------------------------- "
 " --- config of plugins --- "
 " ------------------------- "
+
+let g:bufferline_modified = '●'
 " -- ultisnips -- "
 "function! g:UltiSnips_Complete()
 "  call UltiSnips#ExpandSnippet()
