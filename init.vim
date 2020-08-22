@@ -9,7 +9,6 @@
 " " " " " " " " " " " " " " " " " " " " " " " " " " "
 
 "================================================================="
-
 " ------------------------------------- "
 " --- Install plugins automatically --- "
 " ------------------------------------- "
@@ -239,7 +238,7 @@ Plug '986299679/space-vim-theme'
 
 " -- status line -- "
 Plug 'liuchengxu/eleline.vim'
-Plug 'bling/vim-bufferline'
+Plug 'vim-scripts/BufLine'
 "Plug 'vim-airline/vim-airline'
 "Plug 'vim-airline/vim-airline-themes'
 
@@ -290,6 +289,9 @@ call plug#end()
 " ------------------------- "
 " --- config of plugins --- "
 " ------------------------- "
+" -- BufLine -- "
+let g:wintabs_display = 'tabline'
+"values: 'tabline', 'statusline', or 'none'
 
 let g:bufferline_modified = '●'
 " -- ultisnips -- "
@@ -529,7 +531,7 @@ let g:AutoPairsShortcutToggle = '<leader><leader>p'
 " Python Semantic Completion
 let g:ycm_python_binary_path = '/usr/bin/python3'
 " C family Completion Path
-let g:ycm_global_ycm_extra_conf = '/home/luis/.config/nvim/myplugin/YouCompleteMe/.ycm_extra_conf.py'
+"let g:ycm_global_ycm_extra_conf = ''
 " 跳转快捷键
 "nnoremap <c-k> :YcmCompleter GoToDeclaration<CR>|
 "nnoremap <c-h> :YcmCompleter GoToDefinition<CR>|
@@ -634,4 +636,7 @@ func! CheckCode()
 	endif
 endfunc
 
+"================================================================="
+let g:python_host_prog = '/usr/bin/python2.7'
+let g:python3_host_prog = '/usr/bin/python3.8'
 "================================================================="
