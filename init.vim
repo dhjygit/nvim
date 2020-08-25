@@ -147,6 +147,7 @@ nnoremap <space>rc :e ~/.config/nvim/init.vim<CR>
 nnoremap <space>rd :!rm ~/.config/nvim/tmp/backup/%.swp<cr><cr>
 
 " -- visual mode -- "
+vnoremap a` c`<esc>pa`<esc>
 vnoremap a' c'<esc>pa'<esc>
 vnoremap a" c"<esc>pa"<esc>
 vnoremap a< c<<esc>pa><esc>
@@ -293,7 +294,6 @@ call plug#end()
 let g:wintabs_display = 'tabline'
 "values: 'tabline', 'statusline', or 'none'
 
-let g:bufferline_modified = '●'
 " -- ultisnips -- "
 "function! g:UltiSnips_Complete()
 "  call UltiSnips#ExpandSnippet()
@@ -328,13 +328,14 @@ let g:bufferline_modified = '●'
 "endif
 
 " -- vista.vim -- "
+nmap <leader><leader>t :Vista!!<cr>
 function! NearestMethodOrFunction() abort
   return get(b:, 'vista_nearest_method_or_function', '')
 endfunction
 set statusline+=%{NearestMethodOrFunction()}
 autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
-" -- xptemplate -- "
+" -- vim-clap -- "
 nnoremap <c-p> :Clap<cr>
 
 " -- xptemplate -- "
@@ -344,9 +345,6 @@ let g:xptemplate_key_pum_only = '<s-Tab>'
 let g:xptemplate_goback = '<c-i>'
 let g:xptemplate_nav_next = '<tab>'
 let g:xptemplate_nav_prev = '<s-tab>'
-
-" -- vista -- "
-nmap <leader><leader>t :Vista!!<cr>
 
 " -- vim-signature -- "
 "autocmd VimEnter * SignatureToggle
@@ -388,7 +386,15 @@ let g:indentLine_char_list = ['┆']
 "let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
 " -- vim-autoformat -- "
+"let verbose=1
+"let g:autoformat_verbosemode=1
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
 let g:formatter_yapf_style = 'pep8'
+let g:formatdef_autopep8 = "'autopep8 - --range '.a:firstline.' '.a:lastline"
+let g:formatters_python = ['autopep8']
+nnoremap <leader><leader>b :w<cr> :!black %<cr> :e %<cr><cr>
 
 " -- ale -- "
 "let g:ale_python_flake8_executable = 'flake8'
@@ -531,7 +537,7 @@ let g:AutoPairsShortcutToggle = '<leader><leader>p'
 " Python Semantic Completion
 let g:ycm_python_binary_path = '/usr/bin/python3'
 " C family Completion Path
-"let g:ycm_global_ycm_extra_conf = ''
+let g:ycm_global_ycm_extra_conf = '/home/luis/.config/nvim/myplugin/YouCompleteMe/python/ycm/tests/testdata/.ycm_extra_conf.py'
 " 跳转快捷键
 "nnoremap <c-k> :YcmCompleter GoToDeclaration<CR>|
 "nnoremap <c-h> :YcmCompleter GoToDefinition<CR>|
@@ -585,7 +591,7 @@ func! CompileCode()
 	elseif &filetype == 'python'
 		set splitbelow
 		:sp
-		:term python %
+		:term python3 %
 	elseif &filetype == 'html'
 		:!live-server --open=% --browser=firefox --port=8888 &
 	elseif &filetype == 'markdown'
@@ -630,7 +636,7 @@ func! CheckCode()
 	elseif &filetype == 'html' || &filetype == 'css' || &filetype == 'javascript'
 		exec "ALEToggle"
 	elseif &filetype == 'markdown'
-	elseif &filetype == 'tex'
+	elseif &filetype == 'tex' || &filetype == 'vim'
 	elseif &filetype == 'dart'
 	elseif &filetype == 'go'
 	endif
