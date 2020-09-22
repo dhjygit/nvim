@@ -84,6 +84,7 @@ nnoremap <s-j> 5j
 nnoremap <s-w> 5w
 nnoremap <s-b> 5b
 nnoremap Y y$
+nnoremap gp `[v`]
 au FileType python nnoremap s; <end>a:<esc>
 au FileType c,cpp nnoremap s; <end>a;<esc>
 " -- visual mode -- "
@@ -99,6 +100,12 @@ vnoremap a] c[<esc>pa]<esc>
 vnoremap a( c(<esc>pa)<esc>
 vnoremap a) c(<esc>pa)<esc>
 vnoremap ab c(<esc>pa)<esc>
+
+vnoremap s{ c{<CR>}<esc>kp<esc>`[v`]>><esc>
+vnoremap s} c{<CR>}<esc>kp<esc>`[v`]>><esc>
+
+vnoremap sb c(<esc>pa)<esc>%i
+nnoremap sb ^v$hc(<esc>pa)<esc>%i
 
 " -- insert mode -- "
 inoremap <c-h> <left>
@@ -161,7 +168,7 @@ map tml :+tabmove<CR>
 " -- buffer -- "
 map zh :bprevious<CR>
 map zl :bnext<CR>
-map sb :bd!<CR>
+map zb :bd!<CR>
 
 " -- Chinese -- "
 inoremap 。 .

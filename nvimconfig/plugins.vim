@@ -5,6 +5,7 @@
 call plug#begin('~/.config/nvim/myplugin')
 
 " -- colorscheme statusline Bufferline -- "
+Plug 'mhinz/vim-signify'
 Plug '986299679/space-vim-theme'
 Plug 'liuchengxu/eleline.vim'
 Plug 'vim-scripts/BufLine'
@@ -19,8 +20,8 @@ Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 " -- html css javascript json -- "
 Plug 'alvan/vim-closetag', {'for': 'html'}
 Plug 'elzr/vim-json'
+"Plug 'yuezk/vim-js', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
 "Plug 'Chiel92/vim-autoformat'
-"Plug 'yuezk/vim-js'
 "Plug 'ternjs/tern_for_vim'
 
 " -- markdown -- "
@@ -47,6 +48,9 @@ Plug 'jwarby/antovim'
 "Plug 'Valloric/MatchTagAlways'
 "Plug 'SirVer/ultisnips'
 "Plug 'honza/vim-snippets'
+
+Plug 'metakirby5/codi.vim'
+
 call plug#end()
 
 " ---------------------- "
@@ -54,7 +58,7 @@ call plug#end()
 " ---------------------- "
 
 " -- colorscheme -- "
-colorscheme space_vim_theme
+colorscheme lavender
 set background=dark
 set termguicolors
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -65,8 +69,6 @@ let g:deus_termcolors=256
 hi Comment guifg=#5C637f ctermfg=248
 
 " -- vim-instant-markdown -- "
-"nnoremap <space>mp :InstantMarkdownPreview<CR>
-nnoremap <space>c :InstantMarkdownStop<CR>
 let g:instant_markdown_browser = "firefox --new-window"
 let g:instant_markdown_port = 8888
 let g:instant_markdown_slow = 0
@@ -162,6 +164,9 @@ let g:closetag_close_shortcut = '<leader>>'
 nnoremap <silent><c-y> :MaximizerToggle<CR>
 vnoremap <silent><c-y> :MaximizerToggle<CR>gv
 inoremap <silent><c-y> <C-o>:MaximizerToggle<CR>
+
+" -- codi.vim -- "
+nnoremap <space>d :Codi!!<CR>
 
 "================================================================="
 let g:python_host_prog = '/usr/bin/python2.7'

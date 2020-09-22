@@ -3,8 +3,9 @@
 " ------------ "
 
 " -- compile the code -- "
-noremap <space>r :call CompileCode()<CR>
-func! CompileCode()
+noremap <space>r :call CompileCode(0)<CR>
+noremap <space>R :call CompileCode(1)<CR>
+func! CompileCode(type)
 	exec "w"
 	if &filetype == 'c'
 		set splitbelow
@@ -24,10 +25,13 @@ func! CompileCode()
         :sp
         :term python3 %
 	elseif &filetype == 'html'
-		:!live-server --open=% --browser=firefox --port=8888 &
+		silent !live-server --open=% --browser=firefox --port=8888 &
 	elseif &filetype == 'markdown'
-        exec "InstantMarkdownPreview"
-	elseif &filetype == 'tex'
+        exec a:type == 0 ? "InstantMarkdownPreview" : "InstantMarkdownStop"
+	elseif &filetype == 'javascript'
+		set splitbelow
+		:sp
+		:term export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
 	elseif &filetype == 'dart'
 	elseif &filetype == 'go'
 	endif
@@ -43,10 +47,10 @@ func! FormatCode()
         :silent !clang-format -style=Microsoft -i %
         :e
 	elseif &filetype == 'python'
-        :!black %
+        :silent !black %
         :e %
 	elseif &filetype == 'html' || &filetype == 'css' || &filetype == 'javascript'
-        :!js-beautify -r %
+        :silent !js-beautify -r %
         :e %
 	elseif &filetype == 'markdown'
         :CocCommand prettier.formatFile

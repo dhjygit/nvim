@@ -17,10 +17,9 @@ let g:coc_global_extensions = [
     \ 'coc-json',
     \ 'coc-diagnostic',
     \ 'coc-bookmark',
-    \ 'coc-python',
     \ 'coc-prettier',
 	\ 'coc-yaml',
-    \ 'coc-pyright']
+    \ 'coc-python']
 
 "================================================================="
 
